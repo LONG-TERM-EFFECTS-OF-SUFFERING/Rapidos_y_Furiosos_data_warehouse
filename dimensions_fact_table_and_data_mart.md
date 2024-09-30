@@ -37,7 +37,24 @@ erDiagram
 
 > `location_name` would be the "sede" name.
 
-### Status
+### Update
+
+```MERMAID
+erDiagram
+    UPDATE_DIMENSION {
+        int update_id PK
+        string update_name
+        string update_description
+    }
+```
+
+The possible names are:
+
+1. "Novedades del servicio".
+
+2. "No puedo continuar".
+
+### Service status
 
 ```MERMAID
 erDiagram
@@ -60,6 +77,8 @@ erDiagram
         int day
         int day_of_week
         int hour
+        int minute
+        int second
     }
 ```
 
@@ -69,20 +88,20 @@ erDiagram
 erDiagram
     SERVICE_FACT {
         int service_id PK
-        int time_id FK
+        int original_service_id
         int customer_id FK
         int courier_id FK
         int status_id FK
         int origin_location_id FK
         int destination_location_id FK
-        timestamp request_time
-        timestamp assignment_time
-        timestamp pickup_time
-        timestamp delivery_time
-        timestamp closure_time
+        int request_time FK
+        int assignment_time FK
+        int pickup_time FK
+        int delivery_time FK
+        int closure_time FK
+        int update FK
         interval service_duration
         interval waiting_time
-        text issues_reported
     }
 ```
 
@@ -108,6 +127,12 @@ erDiagram
         string location_region
     }
 
+    UPDATE_DIMENSION {
+        int update_id PK
+        string update_name
+        string update_description
+    }
+
     SERVICE_STATUS_DIMENSION {
         int status_id PK
         string status_name
@@ -122,36 +147,36 @@ erDiagram
         int day
         int day_of_week
         int hour
+        int minute
+        int second
     }
 
     SERVICE_FACT {
         int service_id PK
-        int time_id FK
+        int original_service_id
         int customer_id FK
         int courier_id FK
         int status_id FK
-        int service_type_id FK
         int origin_location_id FK
         int destination_location_id FK
-        timestamp request_time
-        timestamp assignment_time
-        timestamp pickup_time
-        timestamp delivery_time
-        timestamp closure_time
+        int request_time FK
+        int assignment_time FK
+        int pickup_time FK
+        int delivery_time FK
+        int closure_time FK
+        int update FK
         interval service_duration
         interval waiting_time
-        text issues_reported
     }
 
-    TIME_DIMENSION ||--o{ SERVICE_FACT : "has"
-    CUSTOMER_DIMENSION ||--o{ SERVICE_FACT : "has"
     COURIER_DIMENSION ||--o{ SERVICE_FACT : "has"
-    SERVICE_STATUS_DIMENSION ||--o{ SERVICE_FACT : "has"
+    CUSTOMER_DIMENSION ||--o{ SERVICE_FACT : "has"
     LOCATION_DIMENSION ||--o{ SERVICE_FACT : "has"
+    UPDATE_DIMENSION ||--o{ SERVICE_FACT : "has"
+    SERVICE_STATUS_DIMENSION ||--o{ SERVICE_FACT : "has"
+    TIME_DIMENSION ||--o{ SERVICE_FACT : "has"
 ```
 
 ## Remarks
 
 1. The information as "name" was not put in `COURIER_DIMENSION` or `CUSTOMER_DIMENSION` because in the OLTP database provided they all have the same name.
-
-2. The `TIME_DIMENSION` did not include information such as "hour", "minute" and "second" because none of the questions required this level of detail.

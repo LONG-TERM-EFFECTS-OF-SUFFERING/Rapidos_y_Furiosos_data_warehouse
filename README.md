@@ -36,22 +36,24 @@ The project involves building a data analytics system for "Rápidos y Furiosos,"
 
 ## Dimensions
 
-1. Time.
+1. Courier.
 
 2. Customer.
 
-3. Courier.
+3. Location.
 
-4. Service status.
+4. Update.
 
-5. Type of service.
+5. Status.
+
+6. Time.
 
 ## Bus matrix
 
-|     Business processes     | Time |   |
-|:--------------------------:|:----:|:-:|
-|      service request       |      |   |
-|     service assignment     |      |   |
-|      service delivery      |      |   |
-|      news management       |      |   |
-| shipment status monitoring |      |   |
+|     Business processes     | Courier | Customer | Location | Update | Status | Time |
+|:--------------------------:|:-------:|:--------:|:--------:|:------:|:------:|:----:|
+|      service request       |    X    |    X     |    X     |        |        |  X   |
+|     service assignment     |    X    |          |          |        |   X    |  X   |
+|      service delivery      |    X    |          |    X     |        |   X    |  X   |
+|      news management       |         |          |          |   X    |        |  X   |
+| shipment status monitoring |    X    |          |          |        |   X    |  X   |
