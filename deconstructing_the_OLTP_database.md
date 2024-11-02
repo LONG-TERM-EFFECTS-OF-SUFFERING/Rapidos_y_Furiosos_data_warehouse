@@ -36,75 +36,118 @@
 
         - `estado_id`.
 
-> Busyness will be measured as a function of how many services (at a specify time) have `state_id` equal to "Con mensajero asignado" ($2$).
+> Busyness will be measured as a function of how many services (at a specific time) have `state_id` equal to "Con mensajero asignado" ($2$).
 
 ## How many services are requested by each client per month?
 
+- Granularity: monthly.
+
+- Related tables:
+
+    - `mensajeria_estadosservicio`.
+
+        - `cliente_id`.
+
+    - `clientes`.
+
 ## Which couriers are the most efficient (based on the number of services completed)?
 
+- Granularity: transactional.
+
+- Related tables:
+
+    - `mensajeria_estadosservicio`.
+
+        - `mensajero_id`.
+
+    - `mensajeria_estado`.
+
+        - `id`.
+
+    - `mensajeria_estadosservicio`.
+
+        - `estado_id`.
+
+        - `servicio_id`.
+
 ## Which client locations request the most services?
+
+- Granularity: transactional.
+
+- Related tables:
+
+    - `mensajeria_estadosservicio`.
+
+        - `origen_id`.
+
+    - `mensajeria_origenservicio`.
+
+        - `ciudad_id`.
+
+    - `ciudad`.
+
+        - `nombre`.
 
 ## What is the average delivery time from service request to case closure?
 
 - Granularity: transactional.
 
-- Related tables:.
+- Related tables.
 
-    - `mensajería_estadoservicio`
+    - `mensajeria_estado`.
 
-        - `servicio_id`
+        - `id`.
 
-        - `estado_id`
+        - `nombre`.
 
-        - `fecha`
+    - `mensajeria_estadosservicio`.
 
-        - `hora`
+        - `fecha`.
 
-    - `mensajería_estado`
+        - `hora`.
 
-        - `id`
+        - `estado_id`.
 
-        - `nombre`
+        - `servicio_id`.
 
-> It should be noted that in `mensajería_estadoservicio` to detect the states. the state with the attribute `estado_id` equal to "6" must be searched, which corresponds to "Terminado completo". It could even take into account the "Iniciado" with `estado_id` equal to "1".
+> In `mensajeria_estadoservicio`, a `estado_id` equal to $6$ corresponds to "Terminado completo" and a `estado_id` equal to $1$ corresponds to "Iniciado".
 
 ## What are the waiting times at each service stage (e.g., initiated, courier assigned, picked up, delivered, closed)? In which stage do delays occur most frequently?
 
 - Granularity: transactional.
 
-- Related tables:
+- Related tables.
 
-    - `mensajería_estadoservicio`
+    - `mensajeria_estado`.
 
-        - `servicio_id`
+        - `id`.
 
-        - `estado_id`
+        - `nombre`.
 
-        - `fecha`
+    - `mensajeria_estadosservicio`.
 
-        - `hora`
+        - `fecha`.
 
-    - `mensajería_estado`
+        - `hora`.
 
-        - `id`
+        - `estado_id`.
 
-        - `nombre`
+        - `servicio_id`.
 
 ## What are the most common issues reported during service provision?
-## Español: ¿Cuáles son los problemas más comunes reportados durante la prestación del servicio?
 
 - Granularity: transactional.
 
 - Related tables:
 
-    - `mensajería_novedadservicio`
+    - `mensajeria_tiponovedad`.
 
-        - `servicio_id`
+        - `id`.
 
-        - `tipo_novedad_id`
+        - `nombre`.
 
-    - `mensajería_tiponovedad`
-        
-        - `id`
-        
-        - `nombre`
+    - `mensajeria_novedadservicio`.
+
+        - `servicio_id`.
+
+        - `tipo_novedad_id`.
