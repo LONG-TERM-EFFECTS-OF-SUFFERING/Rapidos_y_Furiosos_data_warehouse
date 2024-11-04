@@ -4,9 +4,9 @@ The project involves building a data analytics system for "Rápidos y Furiosos,"
 
 ## Members
 
-- Calderón Prieto Brandon (2125974).
+- Agudelo Hernández Carlos Andrés (2125653).
 
-- .
+- Calderón Prieto Brandon (2125974).
 
 - .
 

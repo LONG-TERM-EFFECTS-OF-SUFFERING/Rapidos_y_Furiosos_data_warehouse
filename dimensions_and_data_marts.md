@@ -76,9 +76,9 @@ erDiagram
         int month
         int day
         int day_of_week
-        int hour
-        int minute
-        int second
+        int day_of_month
+        string month_str
+        string day_str
     }
 ```
 
