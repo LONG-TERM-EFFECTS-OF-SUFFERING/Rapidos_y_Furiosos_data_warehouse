@@ -1,3 +1,5 @@
 config.yml
 .venv
 requirements.txt
+OLTP.sql
+.gitignore

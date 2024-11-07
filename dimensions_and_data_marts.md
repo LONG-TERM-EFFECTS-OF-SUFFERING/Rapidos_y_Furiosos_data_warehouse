@@ -161,7 +161,7 @@ erDiagram
     SERVICE_STATUS_DIMENSION ||--o{ SERVICE_FACT_TABLE : "has"
 ```
 
-### News (transactional)
+### Updates (transactional)
 
 ```MERMAID
 erDiagram
@@ -183,15 +183,14 @@ erDiagram
         string update_description
     }
 
-    NEWS_FACT_TABLE {
-        int news_fact_table_id PK
-        int service_id
+    UPDATES_FACT_TABLE {
+        int UPDATES_fact_table_id PK
         int update FK
         int time FK
     }
 
-    TIME_DIMENSION ||--o{ NEWS_FACT_TABLE : "has"
-    UPDATE_DIMENSION ||--o{ NEWS_FACT_TABLE : "has"
+    TIME_DIMENSION ||--o{ UPDATES_FACT_TABLE : "has"
+    UPDATE_DIMENSION ||--o{ UPDATES_FACT_TABLE : "has"
 ```
 
 ## Remarks
