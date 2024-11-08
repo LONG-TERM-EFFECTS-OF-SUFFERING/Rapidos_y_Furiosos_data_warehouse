@@ -43,12 +43,11 @@ erDiagram
 erDiagram
     UPDATE_DIMENSION {
         int update_id PK
-        string update_name
         string update_description
     }
 ```
 
-The possible names are:
+The possible description are:
 
 1. "Novedades del servicio".
 
@@ -180,13 +179,14 @@ erDiagram
     UPDATE_DIMENSION {
         int update_id PK
         string update_name
-        string update_description
     }
 
     UPDATES_FACT_TABLE {
-        int UPDATES_fact_table_id PK
-        int update FK
-        int time FK
+        int updates_fact_table_id PK
+        int update_id FK
+        int time_id FK
+        int service_id
+        string update_description
     }
 
     TIME_DIMENSION ||--o{ UPDATES_FACT_TABLE : "has"
