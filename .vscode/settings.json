@@ -1,0 +1,8 @@
+{
+	"editor.insertSpaces": false,
+	"files.eol": "\n",
+	"files.trimTrailingWhitespace": true,
+	"[markdown]": {
+		"editor.insertSpaces": true,
+	},
+}

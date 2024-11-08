@@ -52,7 +52,7 @@ The project involves building a data analytics system for "Rápidos y Furiosos",
 
 2. Customer.
 
-3. Location.
+3. Office.
 
 4. Update.
 
@@ -62,7 +62,7 @@ The project involves building a data analytics system for "Rápidos y Furiosos",
 
 ## Bus matrix
 
-|     Business processes      | Courier | Customer | Location | Update | Status | Time |
-|:---------------------------:|:-------:|:--------:|:--------:|:------:|:------:|:----:|
-| courier services management |    X    |          |    X     |        |   X    |  X   |
-|     updates management      |         |          |          |   X    |        |  X   |
+|     Business processes      | Courier | Customer | Office | Update | Status | Time |
+|:---------------------------:|:-------:|:--------:|:------:|:------:|:------:|:----:|
+| courier services management |    X    |          |   X    |        |   X    |  X   |
+|     updates management      |         |          |        |   X    |        |  X   |

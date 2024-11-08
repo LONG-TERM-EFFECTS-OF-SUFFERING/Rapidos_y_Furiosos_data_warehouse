@@ -22,20 +22,19 @@ erDiagram
     }
 ```
 
-### Location
+### Office
 
 ```MERMAID
 erDiagram
-    LOCATION_DIMENSION {
-        int location_id PK
-        string location_name
-        string location_type
-        string location_city
-        string location_region
+    OFFICE_DIMENSION {
+        int office_id PK
+        string office_name
+        string office_city
+        string office_region
     }
 ```
 
-> `location_name` would be the "sede" name.
+> `office_name` would be the "sede" name.
 
 ### Update
 
@@ -131,11 +130,10 @@ erDiagram
     }
 
     LOCATION_DIMENSION {
-        int location_id PK
-        string location_name
-        string location_type
-        string location_city
-        string location_region
+        int office_id PK
+        string office_name
+        string office_city
+        string office_region
     }
 
     SERVICE_STATUS_DIMENSION {
@@ -150,8 +148,8 @@ erDiagram
         int customer_id FK
         int courier_id FK
         int status_id FK
-        int origin_location_id FK
-        int destination_location_id FK
+        int origin_office_id FK
+        int destination_office_id FK
     }
 
     COURIER_DIMENSION ||--o{ SERVICE_FACT_TABLE : "has"
