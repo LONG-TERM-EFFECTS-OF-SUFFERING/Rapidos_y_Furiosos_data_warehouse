@@ -77,6 +77,7 @@ erDiagram
         int day_of_month
         string month_str
         string day_str
+        int hour
     }
 ```
 
@@ -129,7 +130,7 @@ erDiagram
         string customer_city
     }
 
-    LOCATION_DIMENSION {
+    OFFICE_DIMENSION {
         int office_id PK
         string office_name
         string office_city

@@ -3,3 +3,4 @@ config.yml
 requirements.txt
 OLTP.sql
 .gitignore
+db/
