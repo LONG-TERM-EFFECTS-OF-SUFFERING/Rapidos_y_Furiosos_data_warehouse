@@ -164,7 +164,7 @@ erDiagram
         int total_services
     }
 
-    TIME_DIMENSION ||--o{ SERVICE_FACT_HOUR_TABLE : "has"
+    TIME_DIMENSION ||--o{ SERVICE_FACT_TABLE : "has"
     COURIER_DIMENSION ||--o{ SERVICE_FACT_TABLE : "has"
     CUSTOMER_DIMENSION ||--o{ SERVICE_FACT_TABLE : "has"
     OFFICE_DIMENSION ||--o{ SERVICE_FACT_TABLE : "has"
