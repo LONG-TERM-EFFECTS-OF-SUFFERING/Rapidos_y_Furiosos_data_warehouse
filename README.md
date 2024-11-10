@@ -65,4 +65,4 @@ The project involves building a data analytics system for "Rápidos y Furiosos",
 |     Business processes      | Courier | Customer | Office | Update | Status | Time |
 |:---------------------------:|:-------:|:--------:|:------:|:------:|:------:|:----:|
 | courier services management |    X    |    X     |   X    |        |   X    |  X   |
-|     updates management      |    X    |          |        |   X    |        |  X   |
+|     updates management      |         |          |        |   X    |        |  X   |
