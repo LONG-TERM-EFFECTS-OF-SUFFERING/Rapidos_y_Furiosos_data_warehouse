@@ -103,11 +103,11 @@ erDiagram
     ACUMMULATING_SNAPSHOT_FACT_TABLE {
         int acummulating_snapshot_fact_table_id PK
         int service_id
-        int request_time FK
-        int assignment_time FK
-        int pickup_time FK
-        int delivery_time FK
-        int closure_time FK
+        int request_time_id FK
+        int assignment_time_id FK
+        int pickup_time_id FK
+        int delivery_time_id FK
+        int closure_time_id FK
         interval request_assignment_time
         interval assignment_pickup_time
         interval pickup_delivery_time
