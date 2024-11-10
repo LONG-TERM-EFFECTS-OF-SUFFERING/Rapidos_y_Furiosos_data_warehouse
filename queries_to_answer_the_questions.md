@@ -2,6 +2,115 @@
 
 ## Which months of the year have the highest number of courier service requests?
 
+### Using the service hour dataframe
+
+```SQL
+SELECT
+    td.month,
+    SUM(sfh.total_services) AS total_services
+FROM
+    public."SERVICE_FACT_HOUR_TABLE" sfh
+JOIN
+    public."TIME_DIMENSION" td ON sfh.time_id = td.time_id
+GROUP BY
+    td.month
+ORDER BY
+    total_services DESC;
+```
+
+## Which days of the week see the most service requests?
+
+### Using the service hour dataframe
+
+```SQL
+SELECT
+    td.day_str AS day_of_week,
+    SUM(sfh.total_services) AS total_services
+FROM
+    public."SERVICE_FACT_HOUR_TABLE" sfh
+JOIN
+    public."TIME_DIMENSION" td ON sfh.time_id = td.time_id
+GROUP BY
+    td.day_str
+ORDER BY
+    total_services DESC;
+```
+
+## At what time of day are couriers busiest?
+
+### Using the service hour dataframe
+
+```SQL
+SELECT
+    td.hour,
+    SUM(sfh.total_services) AS total_services
+FROM
+    public."SERVICE_FACT_HOUR_TABLE" sfh
+JOIN
+    public."TIME_DIMENSION" td ON sfh.time_id = td.time_id
+GROUP BY
+    td.hour
+ORDER BY
+    total_services DESC;
+```
+
+## How many services are requested by each client per month?
+
+### Using the service hour dataframe
+
+```SQL
+SELECT
+    sfh.customer_id,
+    td.month,
+    COUNT(sfh.service_fact_hour_table_id) AS total_services
+FROM
+    public."SERVICE_FACT_HOUR_TABLE" sfh
+JOIN
+    public."TIME_DIMENSION" td ON sfh.time_id = td.time_id
+GROUP BY
+    sfh.customer_id,
+    td.month
+ORDER BY
+    sfh.customer_id,
+    td.month;
+```
+
+## Which couriers are the most efficient (based on the number of services completed)?
+
+### Using the service hour dataframe
+
+```SQL
+SELECT
+    sfh.courier_id,
+    COUNT(sfh.service_fact_hour_table_id) AS total_services
+FROM
+    public."SERVICE_FACT_HOUR_TABLE" sfh
+GROUP BY
+    sfh.courier_id
+ORDER BY
+    total_services DESC
+LIMIT 10;
+```
+
+## Which are the locations that request the most services per client?
+
+### Using the service hour dataframe
+
+```SQL
+SELECT
+    sfh.customer_id,
+    sfh.office_id,
+    COUNT(sfh.service_fact_hour_table_id) AS total_services
+FROM
+    public."SERVICE_FACT_HOUR_TABLE" sfh
+GROUP BY
+    sfh.customer_id,
+    sfh.office_id
+ORDER BY
+    sfh.customer_id,
+    total_services DESC;
+```
+
 ## What is the average delivery time from service request to case closure?
 
 ```SQL
