@@ -144,6 +144,17 @@ erDiagram
         string status_description
     }
 
+    TIME_DIMENSION {
+        int time_id PK
+        date date
+        int year
+        int month
+        int day
+        int day_of_week
+        int hour
+        int minute
+    }
+
     SERVICE_FACT_TABLE {
         int service_fact_table_id PK
         int time_id FK
