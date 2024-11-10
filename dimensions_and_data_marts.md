@@ -78,6 +78,7 @@ erDiagram
         string month_str
         string day_str
         int hour
+        int minute
     }
 ```
 
@@ -155,7 +156,7 @@ erDiagram
 
     COURIER_DIMENSION ||--o{ SERVICE_FACT_TABLE : "has"
     CUSTOMER_DIMENSION ||--o{ SERVICE_FACT_TABLE : "has"
-    LOCATION_DIMENSION ||--o{ SERVICE_FACT_TABLE : "has"
+    OFFICE_DIMENSION ||--o{ SERVICE_FACT_TABLE : "has"
     SERVICE_STATUS_DIMENSION ||--o{ SERVICE_FACT_TABLE : "has"
 ```
 
