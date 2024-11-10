@@ -8,7 +8,7 @@ The project involves building a data analytics system for "Rápidos y Furiosos",
 
 - Calderón Prieto Brandon (2125974).
 
-- .
+- Ortiz Gonzalez Juan Camilo (2023921).
 
 ## Questions to be answered
 
