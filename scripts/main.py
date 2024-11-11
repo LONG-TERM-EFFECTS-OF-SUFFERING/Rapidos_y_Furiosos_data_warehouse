@@ -47,8 +47,6 @@ for name in name_required_tables:
 #                                TRANSFORMATION                                #
 # ---------------------------------------------------------------------------- #
 
-# -------------------------------- DIMENSIONS -------------------------------- #
-
 dimension_names = [
 	"COURIER_DIMENSION",
 	"CUSTOMER_DIMENSION",
@@ -78,11 +76,15 @@ dimension_related_tables = [
 
 dimension_contents = { }
 
-for i, dimension_name in enumerate(dimension_names):
-	dimension_contents[dimension_name] = dimension_transformation_functions[i](dimension_related_tables[i])
-	dimension_contents[dimension_name].to_sql(
-		dimension_name, OLAP_connection, if_exists="replace", index=True
-	)
+def create_dimensions():
+	for i, dimension_name in enumerate(dimension_names):
+		dimension_transformation_functions[i](dimension_related_tables[i]).to_sql(
+			dimension_name, OLAP_connection, if_exists="replace", index=True
+		)
+
+def load_dimensions():
+	for name in dimension_names:
+		dimension_contents[name] = pd.read_sql_table(name, OLAP_connection)
 
 # -------------------------------- DATA MARTS -------------------------------- #
 
@@ -90,21 +92,49 @@ fact_table_names = [
 	# "ACUMMULATING_SNAPSHOTFACT_TABLE",
 	# "SERVICES_HOUR_FACT_TABLE",
 	# "SERVICES_DAILY_FACT_TABLE",
-	# "UPDATESFACT_TABLE",
+	"UPDATES_FACT_TABLE",
 ]
 
 data_marts_transformation_functions = [
-	# updates.transformation
-]
-
-data_marts_related_tables = [
-	# [dimension_contents["TIME_DIMENSION"], content_required_tables["mensajeria_novedadesservicio"]],
+	updates.transformation
 ]
 
 fact_table_contents = { }
 
-for i, fact_table_name in enumerate(fact_table_names):
-	fact_table_contents[fact_table_name] = data_marts_transformation_functions[i](data_marts_related_tables[i])
-	fact_table_contents[fact_table_name].to_sql(
-		fact_table_name, OLAP_connection, if_exists="replace", index=True
-	)
+def create_data_marts():
+	data_marts_related_tables = [
+		[dimension_contents["TIME_DIMENSION"], content_required_tables["mensajeria_novedadesservicio"]],
+	]
+
+	for i, fact_table_name in enumerate(fact_table_names):
+		fact_table_contents[fact_table_name] = data_marts_transformation_functions[i](data_marts_related_tables[i])
+		fact_table_contents[fact_table_name].to_sql(
+			fact_table_name, OLAP_connection, if_exists="replace", index=True
+		)
+
+# ---------------------------------------------------------------------------- #
+
+if __name__ == "__main__":
+	while True:
+		menu = ("Welcome to the ETL tool, we have the following options:\n"
+				"1. Create and load the dimensions.\n"
+				"2. Load the dimensions and create and the datamarts.\n"
+				"3. Exit.\n"
+				"->")
+
+		option = int(input(menu))
+
+		match option:
+			case 1:
+				create_dimensions()
+				load_dimensions()
+				print("Dimensions created and loaded.")
+			case 2:
+				load_dimensions()
+				create_data_marts()
+				print("Dimensions loaded.")
+			case 3:
+				print("Exiting...")
+				break
+			case _:
+				print("Invalid option selected.")
