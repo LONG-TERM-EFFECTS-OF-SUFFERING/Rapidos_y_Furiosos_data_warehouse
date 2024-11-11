@@ -18,6 +18,23 @@ ORDER BY
     total_services DESC;
 ```
 
+### Using the service daily dataframe
+```SQL
+SELECT
+	td.year,
+	td.month,
+	SUM(sfd.total_services_per_day) AS total_services
+FROM
+	public."SERVICE_FACT_DAILY_TABLE" sfd
+JOIN
+	public."TIME_DIMENSION" td
+	ON sfd.time_id = td.time_id
+GROUP BY
+	td.year, td.month
+ORDER BY
+	total_services DESC;
+```
+
 ## Which days of the week see the most service requests?
 
 ### Using the service hour dataframe
@@ -33,6 +50,23 @@ JOIN
 GROUP BY
     td.day_str
 ORDER BY
+    total_services DESC;
+```
+
+### Using the service daily dataframe
+
+```SQL
+SELECT 
+    td.day_str,
+    SUM(sfd.total_services_per_day) AS total_services
+FROM 
+    public."SERVICE_FACT_DAILY_TABLE" sfd
+JOIN 
+    public."TIME_DIMENSION" td
+    ON sfd.time_id = td.time_id
+GROUP BY 
+    td.day_str
+ORDER BY 
     total_services DESC;
 ```
 
@@ -75,6 +109,25 @@ ORDER BY
     td.month;
 ```
 
+### Using the service daily dataframe
+
+```SQL
+SELECT 
+    sfd.customer_id,
+    td.year,
+    td.month,
+    SUM(sfd.total_services_per_day) AS total_services
+FROM 
+    public."SERVICE_FACT_DAILY_TABLE" sfd
+JOIN 
+    public."TIME_DIMENSION" td
+    ON sfd.time_id = td.time_id
+GROUP BY 
+    sfd.customer_id, td.year, td.month
+ORDER BY 
+    sfd.customer_id, td.year, td.month;
+```
+
 ## Which couriers are the most efficient (based on the number of services completed)?
 
 ### Using the service hour dataframe
@@ -87,6 +140,21 @@ FROM
     public."SERVICE_FACT_HOUR_TABLE" sfh
 GROUP BY
     sfh.courier_id
+ORDER BY
+    total_services DESC
+LIMIT 10;
+```
+
+### Using the service daily dataframe
+
+```SQL
+SELECT
+    sfd.courier_id,
+    COUNT(sfd.service_fact_hour_table_id) AS total_services
+FROM
+    public."SERVICE_FACT_DAILY_TABLE" sfd
+GROUP BY
+    sfd.courier_id
 ORDER BY
     total_services DESC
 LIMIT 10;
@@ -108,6 +176,21 @@ GROUP BY
     sfh.office_id
 ORDER BY
     sfh.customer_id,
+    total_services DESC;
+```
+
+### Using the service daily dataframe
+
+```SQL
+SELECT 
+    sfd.customer_id,
+    sfd.office_id,
+    SUM(sfd.total_services_per_day) AS total_services
+FROM 
+    public."SERVICE_FACT_DAILY_TABLE" sfd
+GROUP BY 
+    sfd.customer_id, sfd.office_id
+ORDER BY 
     total_services DESC;
 ```
 
