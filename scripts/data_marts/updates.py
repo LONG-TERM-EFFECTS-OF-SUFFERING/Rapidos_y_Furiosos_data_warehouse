@@ -1,12 +1,10 @@
-from typing import List
 import pandas as pd
+from typing import List
 
 
 def transformation(tables: List[pd.DataFrame]) -> pd.DataFrame:
 	time_dimension = tables[0]
 	updates = tables[1]
-
-	print(time_dimension[["date", "time_id"]])
 
 	updates["fecha_novedad"] = updates["fecha_novedad"].dt.floor("min").dt.tz_localize(None)
 

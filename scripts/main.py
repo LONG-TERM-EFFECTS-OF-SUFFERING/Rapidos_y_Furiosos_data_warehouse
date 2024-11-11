@@ -1,10 +1,11 @@
+import copy
 import pandas as pd
 import yaml
-import copy
+
 from sqlalchemy import create_engine
 
 from dimensions import courier, customer, office, service_status, time, update
-from data_marts import updates, services_daily
+from data_marts import acummulating_snapshot, services_daily, services_hour, updates
 
 # ---------------------------------------------------------------------------- #
 #                              DATABASE CONNECTION                             #
@@ -92,13 +93,15 @@ def load_dimensions():
 # -------------------------------- DATA MARTS -------------------------------- #
 
 fact_table_names = [
-	# "ACUMMULATING_SNAPSHOTFACT_TABLE",
+	"ACUMMULATING_SNAPSHOTFACT_TABLE",
 	"SERVICES_HOUR_FACT_TABLE",
 	"SERVICES_DAILY_FACT_TABLE",
 	"UPDATES_FACT_TABLE",
 ]
 
 data_marts_transformation_functions = [
+	acummulating_snapshot.transformation,
+	services_hour.transformation,
 	services_daily.transformation,
 	updates.transformation
 ]
@@ -107,7 +110,8 @@ fact_table_contents = { }
 
 def create_data_marts():
 	data_marts_related_tables = [
-		[],
+		[dimension_contents["TIME_DIMENSION"], content_required_tables["mensajeria_estado"], content_required_tables["mensajeria_estadosservicio"]],
+		[dimension_contents["TIME_DIMENSION"], content_required_tables["mensajeria_servicio"], content_required_tables["mensajeria_estadosservicio"]],
 		[dimension_contents["TIME_DIMENSION"], content_required_tables["mensajeria_servicio"], content_required_tables["mensajeria_estadosservicio"]],
 		[dimension_contents["TIME_DIMENSION"], content_required_tables["mensajeria_novedadesservicio"]],
 	]
@@ -125,7 +129,7 @@ if __name__ == "__main__":
 	while True:
 		menu = ("Welcome to the ETL tool, we have the following options:\n"
 				"1. Create and load the dimensions.\n"
-				"2. Load the dimensions and create and the datamarts.\n"
+				"2. Load the dimensions and create the datamarts.\n"
 				"3. Exit.\n"
 				"-> ")
 
