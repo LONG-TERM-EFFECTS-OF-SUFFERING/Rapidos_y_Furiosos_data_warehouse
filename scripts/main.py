@@ -6,6 +6,7 @@ from sqlalchemy import BigInteger, create_engine
 
 from dimensions import courier, customer, office, service_status, time, update
 from data_marts import acummulating_snapshot, services_daily, services_hour, updates
+from relationships import create_relations
 
 # ---------------------------------------------------------------------------- #
 #                              DATABASE CONNECTION                             #
@@ -40,6 +41,8 @@ name_required_tables = [
 	"mensajeria_servicio",
 	"mensajeria_tiponovedad",
 	"sede",
+	"departamento",
+	"clientes_usuarioaquitoy"
 ]
 
 content_required_tables = { }
@@ -72,7 +75,7 @@ dimension_transformation_functions = [
 dimension_related_tables = [
 	[content_required_tables["clientes_mensajeroaquitoy"], content_required_tables["ciudad"]],
 	[content_required_tables["cliente"], content_required_tables["ciudad"]],
-	[content_required_tables["sede"], content_required_tables["ciudad"]],
+	[content_required_tables["sede"], content_required_tables["ciudad"], content_required_tables["departamento"]],
 	[content_required_tables["mensajeria_estado"]],
 	[],
 	[content_required_tables["mensajeria_tiponovedad"]],
@@ -94,8 +97,8 @@ def load_dimensions():
 
 fact_table_names = [
 	"ACUMMULATING_SNAPSHOT_FACT_TABLE",
-	"SERVICE_HOUR_FACT_TABLE",
 	"SERVICE_DAILY_FACT_TABLE",
+	"SERVICE_HOUR_FACT_TABLE",
 	"UPDATES_FACT_TABLE",
 ]
 
@@ -127,8 +130,8 @@ tables_column_types = [
 
 data_marts_transformation_functions = [
 	acummulating_snapshot.transformation,
-	services_hour.transformation,
 	services_daily.transformation,
+	services_hour.transformation,
 	updates.transformation
 ]
 
@@ -136,10 +139,31 @@ fact_table_contents = { }
 
 def create_data_marts():
 	data_marts_related_tables = [
-		[dimension_contents["TIME_DIMENSION"], content_required_tables["mensajeria_estado"], content_required_tables["mensajeria_estadosservicio"]],
-		[dimension_contents["TIME_DIMENSION"], content_required_tables["mensajeria_servicio"], content_required_tables["mensajeria_estadosservicio"]],
-		[dimension_contents["TIME_DIMENSION"], content_required_tables["mensajeria_servicio"], content_required_tables["mensajeria_estadosservicio"]],
-		[dimension_contents["TIME_DIMENSION"], content_required_tables["mensajeria_novedadesservicio"]],
+		[
+			dimension_contents["TIME_DIMENSION"],
+			content_required_tables["mensajeria_estado"],
+			content_required_tables["mensajeria_estadosservicio"]
+		],
+		[
+			dimension_contents["TIME_DIMENSION"],
+			dimension_contents["COURIER_DIMENSION"],
+			dimension_contents["OFFICE_DIMENSION"],
+			content_required_tables["mensajeria_servicio"],
+			content_required_tables["mensajeria_estadosservicio"],
+			content_required_tables["clientes_usuarioaquitoy"]
+		],
+		[
+			dimension_contents["TIME_DIMENSION"],
+			dimension_contents["COURIER_DIMENSION"],
+			dimension_contents["OFFICE_DIMENSION"],
+			content_required_tables["mensajeria_servicio"],
+			content_required_tables["mensajeria_estadosservicio"],
+			content_required_tables["clientes_usuarioaquitoy"]
+		],
+		[
+			dimension_contents["TIME_DIMENSION"],
+			content_required_tables["mensajeria_novedadesservicio"]
+		]
 	]
 
 	for i, fact_table_name in enumerate(fact_table_names):
@@ -169,6 +193,7 @@ if __name__ == "__main__":
 			case 2:
 				load_dimensions()
 				create_data_marts()
+				create_relations(OLAP_connection)
 				print("Dimensions loaded.")
 			case 3:
 				print("Exiting...")

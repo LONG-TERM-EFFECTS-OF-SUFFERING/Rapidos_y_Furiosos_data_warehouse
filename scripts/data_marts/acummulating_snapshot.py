@@ -32,7 +32,7 @@ def transformation(tables: List[pd.DataFrame]) -> pd.DataFrame:
 		}, inplace=True
 	)
 
-	acummulating_snapshot_fact_table = service_statuses[["service_id"]].drop_duplicates().reset_index(drop=True)
+	acummulating_snapshot_fact_table = service_statuses[["service_id"]].drop_duplicates()
 
 	date_columns = ["request_time_id", "assignment_time_id", "pickup_time_id", "delivery_time_id", "closure_time_id"]
 	for col in date_columns:
