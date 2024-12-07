@@ -47,7 +47,7 @@ def transformation(tables: List[pd.DataFrame]) -> pd.DataFrame:
 	services["request_time"] = pd.to_datetime(
 		services["fecha_solicitud"]
 	) + pd.to_timedelta(services["hora_solicitud_str"])
-	services["request_time"] = services["request_time"].dt.floor("H")
+	services["request_time"] = services["request_time"].dt.floor("h")
 
 	time_dimension["date"] = pd.to_datetime(time_dimension["date"])
 	time_mapping = dict(zip(time_dimension["date"], time_dimension["time_id"]))
@@ -74,8 +74,8 @@ def transformation(tables: List[pd.DataFrame]) -> pd.DataFrame:
 		.reset_index()
 	)
 
-	service_fact = service_fact.reset_index().rename(
-		columns={"index": "service_fact_hour_table_id"}
-	)
+	service_fact.reset_index(inplace=True)
+	service_fact = service_fact.rename(columns={ "index": "service_hour_id" })
+	service_fact.set_index("service_hour_id", inplace=True)
 
 	return service_fact

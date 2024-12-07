@@ -2,7 +2,7 @@ import copy
 import pandas as pd
 import yaml
 
-from sqlalchemy import create_engine
+from sqlalchemy import BigInteger, create_engine
 
 from dimensions import courier, customer, office, service_status, time, update
 from data_marts import acummulating_snapshot, services_daily, services_hour, updates
@@ -93,10 +93,36 @@ def load_dimensions():
 # -------------------------------- DATA MARTS -------------------------------- #
 
 fact_table_names = [
-	"ACUMMULATING_SNAPSHOTFACT_TABLE",
-	"SERVICES_HOUR_FACT_TABLE",
-	"SERVICES_DAILY_FACT_TABLE",
+	"ACUMMULATING_SNAPSHOT_FACT_TABLE",
+	"SERVICE_HOUR_FACT_TABLE",
+	"SERVICE_DAILY_FACT_TABLE",
 	"UPDATES_FACT_TABLE",
+]
+
+tables_column_types = [
+	{
+		"request_time_id": BigInteger(),
+		"assignment_time_id": BigInteger(),
+		"pickup_time_id": BigInteger(),
+		"delivery_time_id": BigInteger(),
+		"closure_time_id": BigInteger()
+	},
+	{
+		"time_id": BigInteger(),
+		"customer_id": BigInteger(),
+		"courier_id": BigInteger(),
+		"office_id": BigInteger(),
+	},
+	{
+		"time_id": BigInteger(),
+		"customer_id": BigInteger(),
+		"courier_id": BigInteger(),
+		"office_id": BigInteger(),
+	},
+	{
+		"update_id": BigInteger(),
+		"time_id": BigInteger(),
+	}
 ]
 
 data_marts_transformation_functions = [
@@ -120,7 +146,7 @@ def create_data_marts():
 		related_tables_copy = copy.deepcopy(data_marts_related_tables[i])
 		fact_table_contents[fact_table_name] = data_marts_transformation_functions[i](related_tables_copy)
 		fact_table_contents[fact_table_name].to_sql(
-			fact_table_name, OLAP_connection, if_exists="replace", index=True
+			fact_table_name, OLAP_connection, if_exists="replace", index=True, dtype=tables_column_types[i]
 		)
 
 # ---------------------------------------------------------------------------- #

@@ -33,7 +33,6 @@ def transformation(tables: List[pd.DataFrame]) -> pd.DataFrame:
 		}
 	)
 
-	services["courier_id"].isna().sum()
 	services = services.dropna(subset=["courier_id"])
 
 	services = services.merge(
@@ -63,5 +62,9 @@ def transformation(tables: List[pd.DataFrame]) -> pd.DataFrame:
 			"total_services_per_day"
 		]
 	]
+
+	service_fact.reset_index(inplace=True)
+	service_fact = service_fact.rename(columns={ "index": "service_daily_id" })
+	service_fact.set_index("service_daily_id", inplace=True)
 
 	return service_fact

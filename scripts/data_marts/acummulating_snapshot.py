@@ -82,4 +82,8 @@ def transformation(tables: List[pd.DataFrame]) -> pd.DataFrame:
 	acummulating_snapshot_fact_table["delivery_time_id"] = acummulating_snapshot_fact_table["delivery_time_id"].map(time_mapping)
 	acummulating_snapshot_fact_table["closure_time_id"] = acummulating_snapshot_fact_table["closure_time_id"].map(time_mapping)
 
+	acummulating_snapshot_fact_table.reset_index(inplace=True)
+	acummulating_snapshot_fact_table.rename(columns={ "index": "acummulating_snapshot_id" }, inplace=True)
+	acummulating_snapshot_fact_table.set_index("acummulating_snapshot_id", inplace=True)
+
 	return acummulating_snapshot_fact_table

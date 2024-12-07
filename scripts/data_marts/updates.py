@@ -22,7 +22,7 @@ def transformation(tables: List[pd.DataFrame]) -> pd.DataFrame:
 	)
 
 	updates_fact_table.reset_index(inplace=True)
-	updates_fact_table.rename(columns={ "index": "updates_fact_table_id" }, inplace=True)
-	updates_fact_table.set_index("updates_fact_table_id", inplace=True)
+	updates_fact_table.rename(columns={ "index": "updates_id" }, inplace=True)
+	updates_fact_table.set_index("updates_id", inplace=True)
 
 	return updates_fact_table
