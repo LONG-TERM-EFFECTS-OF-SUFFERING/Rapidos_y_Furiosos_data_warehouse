@@ -12,11 +12,12 @@ def transformation(tables: List[pd.DataFrame]) -> pd.DataFrame:
 
 	courier_dimension.rename(
 		columns={
+			"user_id": "original_courier_id",
 			"nombre": "courier_city"
 		}, inplace=True
 	)
 
-	courier_dimension = courier_dimension[["courier_city"]]
+	courier_dimension = courier_dimension[["original_courier_id", "courier_city"]]
 
 	courier_dimension.reset_index(inplace=True)
 	courier_dimension.rename(columns={ "index": "courier_id" }, inplace=True)

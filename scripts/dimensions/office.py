@@ -10,6 +10,7 @@ def transformation(tables: List[pd.DataFrame]) -> pd.DataFrame:
 
 	office_dimension = office_dimension.rename(
 		columns={
+			"sede_id": "original_office_id",
 			"nombre_x": "office_name",
 			"nombre_y": "office_city",
 			"departamento_id": "office_region",
@@ -18,7 +19,6 @@ def transformation(tables: List[pd.DataFrame]) -> pd.DataFrame:
 
 	office_dimension.drop(
 		columns=[
-			"sede_id",
 			"direccion",
 			"telefono",
 			"nombre_contacto"
