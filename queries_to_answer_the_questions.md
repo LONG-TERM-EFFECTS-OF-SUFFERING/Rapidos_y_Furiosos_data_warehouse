@@ -9,7 +9,7 @@ SELECT
     td.month,
     SUM(sfh.total_services) AS total_services
 FROM
-    public."SERVICE_FACT_HOUR_TABLE" sfh
+    public."SERVICE_HOUR_FACT_TABLE" sfh
 JOIN
     public."TIME_DIMENSION" td ON sfh.time_id = td.time_id
 GROUP BY
@@ -25,7 +25,7 @@ SELECT
 	td.month,
 	SUM(sfd.total_services_per_day) AS total_services
 FROM
-	public."SERVICE_FACT_DAILY_TABLE" sfd
+	public."SERVICE_DAILY_FACT_TABLE" sfd
 JOIN
 	public."TIME_DIMENSION" td
 	ON sfd.time_id = td.time_id
@@ -44,7 +44,7 @@ SELECT
     td.day_str AS day_of_week,
     SUM(sfh.total_services) AS total_services
 FROM
-    public."SERVICE_FACT_HOUR_TABLE" sfh
+    public."SERVICE_HOUR_FACT_TABLE" sfh
 JOIN
     public."TIME_DIMENSION" td ON sfh.time_id = td.time_id
 GROUP BY
@@ -60,7 +60,7 @@ SELECT
     td.day_str,
     SUM(sfd.total_services_per_day) AS total_services
 FROM 
-    public."SERVICE_FACT_DAILY_TABLE" sfd
+    public."SERVICE_DAILY_FACT_TABLE" sfd
 JOIN 
     public."TIME_DIMENSION" td
     ON sfd.time_id = td.time_id
@@ -79,7 +79,7 @@ SELECT
     td.hour,
     SUM(sfh.total_services) AS total_services
 FROM
-    public."SERVICE_FACT_HOUR_TABLE" sfh
+    public."SERVICE_HOUR_FACT_TABLE" sfh
 JOIN
     public."TIME_DIMENSION" td ON sfh.time_id = td.time_id
 GROUP BY
@@ -96,9 +96,9 @@ ORDER BY
 SELECT
     sfh.customer_id,
     td.month,
-    COUNT(sfh.service_fact_hour_table_id) AS total_services
+    COUNT(sfh.service_hour_id) AS total_services
 FROM
-    public."SERVICE_FACT_HOUR_TABLE" sfh
+    public."SERVICE_HOUR_FACT_TABLE" sfh
 JOIN
     public."TIME_DIMENSION" td ON sfh.time_id = td.time_id
 GROUP BY
@@ -116,9 +116,9 @@ SELECT
     sfd.customer_id,
     td.year,
     td.month,
-    SUM(sfd.total_services_per_day) AS total_services
+    SUM(sfd.service_daily_id) AS total_services
 FROM 
-    public."SERVICE_FACT_DAILY_TABLE" sfd
+    public."SERVICE_DAILY_FACT_TABLE" sfd
 JOIN 
     public."TIME_DIMENSION" td
     ON sfd.time_id = td.time_id
@@ -135,9 +135,9 @@ ORDER BY
 ```SQL
 SELECT
     sfh.courier_id,
-    COUNT(sfh.service_fact_hour_table_id) AS total_services
+    COUNT(sfh.service_hour_id) AS total_services
 FROM
-    public."SERVICE_FACT_HOUR_TABLE" sfh
+    public."SERVICE_HOUR_FACT_TABLE" sfh
 GROUP BY
     sfh.courier_id
 ORDER BY
@@ -150,9 +150,9 @@ LIMIT 10;
 ```SQL
 SELECT
     sfd.courier_id,
-    COUNT(sfd.service_fact_hour_table_id) AS total_services
+    COUNT(sfd.service_daily_id) AS total_services
 FROM
-    public."SERVICE_FACT_DAILY_TABLE" sfd
+    public."SERVICE_DAILY_FACT_TABLE" sfd
 GROUP BY
     sfd.courier_id
 ORDER BY
@@ -168,9 +168,9 @@ LIMIT 10;
 SELECT
     sfh.customer_id,
     sfh.office_id,
-    COUNT(sfh.service_fact_hour_table_id) AS total_services
+    COUNT(sfh.service_hour_id) AS total_services
 FROM
-    public."SERVICE_FACT_HOUR_TABLE" sfh
+    public."SERVICE_HOUR_FACT_TABLE" sfh
 GROUP BY
     sfh.customer_id,
     sfh.office_id
@@ -187,7 +187,7 @@ SELECT
     sfd.office_id,
     SUM(sfd.total_services_per_day) AS total_services
 FROM 
-    public."SERVICE_FACT_DAILY_TABLE" sfd
+    public."SERVICE_DAILY_FACT_TABLE" sfd
 GROUP BY 
     sfd.customer_id, sfd.office_id
 ORDER BY 
