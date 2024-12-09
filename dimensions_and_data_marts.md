@@ -8,6 +8,7 @@
 erDiagram
     COURIER_DIMENSION {
         int courier_id PK
+        int original_courier_id
         string courier_city
     }
 ```
@@ -18,6 +19,7 @@ erDiagram
 erDiagram
     CUSTOMER_DIMENSION {
         int customer_id PK
+        int original_customer_id
         string customer_city
     }
 ```
@@ -28,6 +30,7 @@ erDiagram
 erDiagram
     OFFICE_DIMENSION {
         int office_id PK
+        int original_office_id
         string office_name
         string office_city
         string office_region
@@ -123,16 +126,19 @@ erDiagram
 erDiagram
     COURIER_DIMENSION {
         int courier_id PK
+        int original_courier_id
         string courier_city
     }
 
     CUSTOMER_DIMENSION {
         int customer_id PK
+        int original_customer_id
         string customer_city
     }
 
     OFFICE_DIMENSION {
         int office_id PK
+        int original_office_id
         string office_name
         string office_city
         string office_region

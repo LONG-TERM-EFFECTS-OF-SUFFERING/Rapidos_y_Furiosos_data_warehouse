@@ -12,7 +12,7 @@ def transformation(tables: List[pd.DataFrame]) -> pd.DataFrame:
 
 	courier_dimension.rename(
 		columns={
-			"user_id": "original_courier_id",
+			"id": "original_courier_id",
 			"nombre": "courier_city"
 		}, inplace=True
 	)
