@@ -1,4 +1,5 @@
-from sqlalchemy import text
+import yaml
+from sqlalchemy import create_engine, text
 
 
 dimension_tables = [
@@ -87,3 +88,15 @@ def create_relations(engine):
 	"""
 
 	alter_table("UPDATES_FACT_TABLE", query)
+
+if __name__ == "__main__":
+	with open("./config.yml", "r") as file:
+		config = yaml.safe_load(file)
+		config_OLAP = config["OLAP"]
+
+	url_OLAP = (f"{config_OLAP['drivername']}://{config_OLAP['user']}:{config_OLAP['password']}"
+			f"@{config_OLAP['host']}:{config_OLAP['port']}/{config_OLAP['database_name']}")
+
+	OLAP_connection = create_engine(url_OLAP)
+
+	create_relations(OLAP_connection)

@@ -160,7 +160,7 @@ def create_data_marts():
 			content_required_tables["mensajeria_servicio"],
 			content_required_tables["mensajeria_estadosservicio"],
 			content_required_tables["clientes_usuarioaquitoy"],
-  		dimension_contents["CUSTOMER_DIMENSION"]
+			dimension_contents["CUSTOMER_DIMENSION"]
 		],
 		[
 			dimension_contents["TIME_DIMENSION"],
@@ -195,7 +195,7 @@ if __name__ == "__main__":
 			case 2:
 				load_dimensions()
 				create_data_marts()
-				# create_relations(OLAP_connection)
+				create_relations(OLAP_connection)
 				print("Dimensions loaded.")
 			case 3:
 				print("Exiting...")
