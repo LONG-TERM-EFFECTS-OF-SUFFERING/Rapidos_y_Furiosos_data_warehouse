@@ -150,7 +150,8 @@ def create_data_marts():
 			dimension_contents["OFFICE_DIMENSION"],
 			content_required_tables["mensajeria_servicio"],
 			content_required_tables["mensajeria_estadosservicio"],
-			content_required_tables["clientes_usuarioaquitoy"]
+			content_required_tables["clientes_usuarioaquitoy"],
+			dimension_contents["CUSTOMER_DIMENSION"]
 		],
 		[
 			dimension_contents["TIME_DIMENSION"],
@@ -158,7 +159,8 @@ def create_data_marts():
 			dimension_contents["OFFICE_DIMENSION"],
 			content_required_tables["mensajeria_servicio"],
 			content_required_tables["mensajeria_estadosservicio"],
-			content_required_tables["clientes_usuarioaquitoy"]
+			content_required_tables["clientes_usuarioaquitoy"],
+  		dimension_contents["CUSTOMER_DIMENSION"]
 		],
 		[
 			dimension_contents["TIME_DIMENSION"],
